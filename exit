@@ -1,0 +1,17 @@
+[33mcommit b1ab95fb7efa8dbf6497144e3e562ed4f4d05cad[m
+Author: Ryan Boter <jayson.boter90@gmail.com>
+Date:   Thu Nov 17 12:22:14 2016 +0800
+
+    Crete This Query Method
+
+[33mcommit dc25e071f4e12ddf430cddac0e1e7ea60e00adbb[m
+Author: Ryan Boter <jayson.boter90@gmail.com>
+Date:   Thu Nov 17 09:18:52 2016 +0800
+
+    improving connection
+
+[33mcommit 2a5fb4e9f93fbc38105e0f34c82215a689fca018[m
+Author: Ryan Boter <jayson.boter90@gmail.com>
+Date:   Thu Nov 17 08:23:42 2016 +0800
+
+    Create a database connection
