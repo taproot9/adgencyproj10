@@ -1,5 +1,6 @@
 <?php
 include('includes/database.php');
+include('includes/user.php');
 ?>
 
 <!DOCTYPE html>
@@ -190,14 +191,39 @@ include('includes/database.php');
 
                     <?php
 
-                    $sql = "select * from users where id=1";
+                    //                    $sql = "select * from users where id=1";
+                    //
+                    //                    $result = $database->query($sql);
+                    //                    $user_found = mysqli_fetch_array($result);
+                    //
+                    //                    echo $user_found['username'];
 
-                    $result = $database->query($sql);
-                    $user_found = mysqli_fetch_array($result);
 
-                    echo $user_found['username'];
+
+                    //                    $user = new User();
+                    //                    $result_set = $user->find_all_users();
+                    //                    while ($row = mysqli_fetch_array($result_set)){
+                    //                        echo $row['username']. '<br>';
+                    //                    }
+                    //                    echo '<br>';
+
+                    //use static method
+                    $result_set = User::find_all_users();
+                    while($row = mysqli_fetch_array($result_set)){
+                        echo $row['username'] . "<br>";
+                    }
+                    echo '<br>';
+
+
+                    $result_select_id = User::find_user_by_id(1);
+                    echo $result_select_id['first_name'];
+
+                    echo '<br>';
+                    echo '<br>';
 
                     ?>
+
+
 
                     <ol class="breadcrumb">
                         <li>
