@@ -1,7 +1,7 @@
 <?php
 //include('includes/database.php');
 //include('includes/user.php');
-include ('includes/init.php');
+require_once ('includes/init.php');
 ?>
 
 <!DOCTYPE html>
