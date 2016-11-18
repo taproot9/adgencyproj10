@@ -1,6 +1,7 @@
 <?php
-include('includes/database.php');
-include('includes/user.php');
+//include('includes/database.php');
+//include('includes/user.php');
+include ('includes/init.php');
 ?>
 
 <!DOCTYPE html>
@@ -208,31 +209,37 @@ include('includes/user.php');
                     //                    echo '<br>';
 
                     //use static method
-//                    $result_set = User::find_all_users();
-//                    while($row = mysqli_fetch_array($result_set)){
-//                        echo $row['username'] . "<br>";
-//                    }
-//                    echo '<br>';
-//
-//
-//                    $result_select_id = User::find_user_by_id(1);
-//                    echo $result_select_id['first_name'];
-//
-//                    echo '<br>';
-//                    echo '<br>';
+                    //                    $result_set = User::find_all_users();
+                    //                    while($row = mysqli_fetch_array($result_set)){
+                    //
+                    //                        echo $row['username'] . "<br>";
+                    //
+                    //                    }
+
+                    //
+                    //
+                    //                    $result_select_id = User::find_user_by_id(1);
+                    //                    echo $result_select_id['first_name'];
+                    //
+                    //                    echo '<br>';
+                    //                    echo '<br>';
 
                     //use OOP style
+
+                    //                    $result_select_id = User::find_user_by_id(1);
+                    //                    $result = User::instantiation($result_select_id);
+                    //                    echo $result->last_name;
+                    //                    echo '<br>';
+                    //                    echo '<br>';
+
+                    //                    $users = User::find_all_users();
+                    //                    foreach ($users as $user){
+                    //                        echo $user->id.'<br>';
+                    //                    }
+
                     $result_select_id = User::find_user_by_id(1);
+                    echo $result_select_id->last_name;
 
-                    $user = new User();
-
-                    $user->id = $result_select_id['id'];
-                    $user->username = $result_select_id['username'];
-                    $user->password = $result_select_id['password'];
-                    $user->first_name = $result_select_id['first_name'];
-                    $user->last_name = $result_select_id['last_name'];
-
-                    echo $user->username;
 
                     ?>
 
