@@ -19,9 +19,10 @@ class Database
 
         if ($this->connection->connect_errno) {
             die("Database connection failed!" . mysqli_error());
-        } else {
-            echo "Database connected!";
         }
+//        else {
+//            echo "Database connected!";
+//        }
     }
 
     //querys

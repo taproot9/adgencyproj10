@@ -11,3 +11,7 @@ function __autoload($class){
         die("this file named {$class}.php was not found...");
     }
 }
+
+function redirect($location){
+    header("Location: {$location}");
+}
