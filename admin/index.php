@@ -266,10 +266,13 @@ if(!$session->is_signed_in()){
                     //                    $user->create();
 
                     //update User
-                    $user = User::find_user_by_id(2);
-                    $user->last_name = "Boter";
-                    $user->update();
+                    //                    $user = User::find_user_by_id(2);
+                    //                    $user->last_name = "Boter";
+                    //                    $user->update();
 
+                    //delete User
+                    //                    $user = User::find_user_by_id(4);
+                    //                    $user->delete();
 
                     ?>
 

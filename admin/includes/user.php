@@ -128,6 +128,15 @@ class User{
         return (mysqli_affected_rows($database->connection)==1) ? true : false;
 
     }
+
+    public function delete(){
+        global $database;
+        $sql = "delete from users ";
+        $sql .="where id=".$database->escape_string($this->id);
+        $sql .=" limit 1";
+        $database->query($sql);
+        return (mysqli_affected_rows($database->connection)==1) ? true : false;
+    }
 } //end of class user
 
 ?>
