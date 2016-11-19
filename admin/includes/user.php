@@ -95,7 +95,26 @@ class User{
         $the_result_array = self::find_this_query($sql);
         return !empty($the_result_array) ? array_shift($the_result_array):false;
     }
-}
+
+    public function create(){
+        global $database;
+        $sql = "insert into users (username, password, first_name, last_name)";
+        $sql .=" VALUES ('";
+        $sql .= $database->escape_string($this->username)."', '";
+        $sql .= $database->escape_string($this->password)."', '";
+        $sql .= $database->escape_string($this->first_name)."', '";
+        $sql .= $database->escape_string($this->last_name)."')";
+
+        if ( $database->query($sql)){
+            $this->id = $database->the_insert_id();
+            return true;
+        }else{
+            return false;
+        }
+
+
+    }
+} //end of class user
 
 ?>
 

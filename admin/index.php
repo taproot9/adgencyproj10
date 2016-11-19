@@ -240,13 +240,25 @@ if(!$session->is_signed_in()){
                     //                    echo '<br>';
                     //                    echo '<br>';
 
+
+
                     //                    $users = User::find_all_users();
                     //                    foreach ($users as $user){
                     //                        echo $user->id.'<br>';
                     //                    }
 
-                    $result_select_id = User::find_user_by_id(1);
-                    echo $result_select_id->last_name;
+
+
+                    //                    $result_select_id = User::find_user_by_id(1);
+                    //                    echo $result_select_id->last_name;
+
+
+                    $user = new User();
+                    $user->username = "taproot10";
+                    $user->password = "123";
+                    $user->first_name = "mary grace";
+                    $user->last_name = "boter";
+                    $user->create();
 
 
                     ?>
