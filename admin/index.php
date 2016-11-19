@@ -253,12 +253,22 @@ if(!$session->is_signed_in()){
                     //                    echo $result_select_id->last_name;
 
 
-                    $user = new User();
-                    $user->username = "taproot10";
-                    $user->password = "123";
-                    $user->first_name = "mary grace";
-                    $user->last_name = "boter";
-                    $user->create();
+                    /*
+                     * CRUD FOR THE USERS TABLE
+                     */
+
+                    //create User
+                    //                    $user = new User();
+                    //                    $user->username = "taproot10";
+                    //                    $user->password = "123";
+                    //                    $user->first_name = "mary grace";
+                    //                    $user->last_name = "boter";
+                    //                    $user->create();
+
+                    //update User
+                    $user = User::find_user_by_id(2);
+                    $user->last_name = "Boter";
+                    $user->update();
 
 
                     ?>
