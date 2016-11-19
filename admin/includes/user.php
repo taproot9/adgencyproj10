@@ -2,6 +2,8 @@
 
 class User{
 
+    protected static $db_table = "users";
+    protected static $db_table_fields = array('username', 'password', 'first_name', 'last_name');
     public $id;
     public $username;
     public $password;
@@ -81,6 +83,28 @@ class User{
 
     }
 
+    protected function properties(){
+//        return get_object_vars($this);
+        $properties = array();
+        foreach (self::$db_table_fields as $db_field){
+            if (property_exists($this,$db_field)){
+                $properties[$db_field] = $this->$db_field;
+            }
+        }
+        return $properties;
+    }
+
+    protected function clean_properties(){
+        global $database;
+
+        $clean_properties = array();
+
+        foreach ($this->properties() as $key => $value){
+            $clean_properties[$key] = $database->escape_string($value);
+        }
+        return $clean_properties;
+    }
+
     public static function verify_user($username, $password)
     {
         global $database;
@@ -98,12 +122,17 @@ class User{
 
     public function create(){
         global $database;
-        $sql = "insert into users (username, password, first_name, last_name)";
-        $sql .=" VALUES ('";
-        $sql .= $database->escape_string($this->username)."', '";
-        $sql .= $database->escape_string($this->password)."', '";
-        $sql .= $database->escape_string($this->first_name)."', '";
-        $sql .= $database->escape_string($this->last_name)."')";
+
+        $properties = $this->clean_properties();
+
+        $sql = "insert into " .self::$db_table. "(" .implode(",",array_keys($properties)). ")";
+        $sql .= "VALUES ('". implode("','",array_values($properties))."')";
+
+
+//        $sql .= $database->escape_string($this->username)."', '";
+//        $sql .= $database->escape_string($this->password)."', '";
+//        $sql .= $database->escape_string($this->first_name)."', '";
+//        $sql .= $database->escape_string($this->last_name)."')";
 
         if ( $database->query($sql)){
             $this->id = $database->the_insert_id();
@@ -116,12 +145,26 @@ class User{
     public function update(){
         global $database;
 
-        $sql = "update users set ";
-        $sql .= "username= '" .$database->escape_string($this->username)    ."', ";
-        $sql .= "password= '" .$database->escape_string($this->password)    ."', ";
-        $sql .= "first_name= '" .$database->escape_string($this->first_name)."', ";
-        $sql .= "last_name= '" .$database->escape_string($this->last_name)  ."' ";
+        $properties = $this->clean_properties();
+
+        $properties_pairs = array();
+
+        foreach ($properties as $key => $value){
+            $properties_pairs[] = "{$key}='$value'";
+        }
+
+
+        $sql = "update " .self::$db_table. " set ";
+        $sql .= implode(",",$properties_pairs);
         $sql .= " where id=" .$database->escape_string($this->id);
+
+
+//        $sql = "update " .self::$db_table. " set ";
+//        $sql .= "username= '" .$database->escape_string($this->username)    ."', ";
+//        $sql .= "password= '" .$database->escape_string($this->password)    ."', ";
+//        $sql .= "first_name= '" .$database->escape_string($this->first_name)."', ";
+//        $sql .= "last_name= '" .$database->escape_string($this->last_name)  ."' ";
+//        $sql .= " where id=" .$database->escape_string($this->id);
 
         $database->query($sql);
 
@@ -131,12 +174,18 @@ class User{
 
     public function delete(){
         global $database;
-        $sql = "delete from users ";
+        $sql = "delete from " .self::$db_table. "  ";
         $sql .="where id=".$database->escape_string($this->id);
         $sql .=" limit 1";
         $database->query($sql);
         return (mysqli_affected_rows($database->connection)==1) ? true : false;
     }
+
+
+    public function save(){
+        return isset($this->id) ? $this->update(): $this->create();
+    }
+
 } //end of class user
 
 ?>

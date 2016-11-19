@@ -259,20 +259,37 @@ if(!$session->is_signed_in()){
 
                     //create User
                     //                    $user = new User();
-                    //                    $user->username = "taproot10";
+                    //                    $user->username = "ryan.com";
                     //                    $user->password = "123";
-                    //                    $user->first_name = "mary grace";
+                    //                    $user->first_name = "ryan";
                     //                    $user->last_name = "boter";
                     //                    $user->create();
 
                     //update User
-                    //                    $user = User::find_user_by_id(2);
-                    //                    $user->last_name = "Boter";
+                    //                    $user = User::find_user_by_id(5);
+                    //                    $user->last_name = "Comajig";
                     //                    $user->update();
 
                     //delete User
-                    //                    $user = User::find_user_by_id(4);
+                    //                    $user = User::find_user_by_id(7);
                     //                    $user->delete();
+
+                    /*
+                     * ABSTRACTION
+                     */
+
+                    //update User
+                    //                    $user = User::find_user_by_id(6);
+                    //                    $user->last_name = "Dela";
+                    //                    $user->password = "123";
+                    //                    $user->first_name = "Marimar";
+                    //                    $user->save();
+
+
+                    //create User
+                    //                    $user = new User();
+                    //                    $user->username = "whatever";
+                    //                    $user->save();
 
                     ?>
 
