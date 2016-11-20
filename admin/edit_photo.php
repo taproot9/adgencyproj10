@@ -1,24 +1,37 @@
-
 <?php
-//include('includes/database.php');
-//include('includes/user.php');
+
 require_once ('includes/init.php');
-?>
-
-<?php
 
 if(!$session->is_signed_in()){
-    // ../index.php =  //point cya ani : http://localhost/gallery03/index.php
     redirect("login.php");
 }
 
-$photos = Photo::find_all();
+if (empty($_GET['id'])){
+    redirect('photos.php');
+}else{
+    $photo = Photo::find_by_id($_GET['id']);
+    if (isset($_POST['update'])){
+        if ($photo){
+
+            $photo->title = $_POST['title'];
+            $photo->caption = $_POST['caption'];
+            $photo->alternate_text = $_POST['alternate_text'];
+            $photo->description = $_POST['description'];
+
+            $photo->save();
+
+        }
+    }
+
+}
+
+
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="en">
+
+</html>
 
 <head>
 
@@ -38,7 +51,7 @@ $photos = Photo::find_all();
 
     <!-- Custom Fonts -->
     <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
+    <link rel="stylesheet" href="css/styles.css">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -46,7 +59,7 @@ $photos = Photo::find_all();
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-    <link rel="stylesheet" href="css/styles.css">
+
 
 </head>
 
@@ -165,7 +178,7 @@ $photos = Photo::find_all();
                     </li>
                     <li class="divider"></li>
                     <li>
-                        <a href="#"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
+                        <a href="logout.php"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
                     </li>
                 </ul>
             </li>
@@ -205,55 +218,82 @@ $photos = Photo::find_all();
                         <small>Subheading</small>
                     </h1>
 
-                    <div class="cold-md-12">
+                    <form action="" method="post">
 
-                        <table class="table table-hover">
-                            <thead>
-                            <tr>
-                                <th>Photo</th>
-                                <th>Id</th>
-                                <th>File</th>
-                                <th>Title</th>
-                                <th>Size</th>
-                            </tr>
-                            </thead>
-                            <tbody>
+                        <div class="col-md-8">
 
+                            <div class="form-group">
+                                <input type="text" name="title" class="form-control" value="<?php echo $photo->title; ?>">
+                            </div>
 
-                            <?php  foreach($photos as $photo): ?>
-                                <tr>
-                                    <td><img class="admin-photo-thumbnail" src="<?php echo $photo->picture_path();?>" alt="" height="150" width="200">
-                                        <div class="pictures_link">
-                                            <a href="delete_photo.php?id=<?php echo $photo->id; ?>" class="btn btn-success btn-xs">Delete</a>
-                                            <a href="edit_photo.php?id=<?php echo $photo->id; ?>" class="btn btn-success btn-xs">Edit</a>
-                                            <a href="#" class="btn btn-success btn-xs">View</a>
+                            <div class="form-group">
+                                <a class="thumbnail" href="#"><img src="<?php echo $photo->picture_path(); ?>" alt=""></a>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="caption">Caption</label>
+                                <input type="text" name="caption" class="form-control" value="<?php echo $photo->caption; ?>">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="caption">Alternate Text</label>
+                                <input type="text" name="alternate_text" class="form-control" value="<?php echo $photo->alternate_text; ?>">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="caption">Description</label>
+                                <textarea class="form-control" name="description" id="" cols="30" rows="10"><?php echo $photo->description; ?></textarea>
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="photo-info-box">
+                                <div class="info-box-header">
+                                    <h4>Save <span id="toggle" class="glyphicon glyphicon-menu-up pull-right"></span></h4>
+                                </div>
+                                <div class="inside">
+
+                                    <div class="box-inner">
+                                        <p class="text">
+                                            <span class="glyphicon glyphicon-calendar"> </span> Uploaded on: Aug 25, 2030 @ 5:30
+                                        </p>
+                                        <p class="text">
+                                            Photo Id: <span class="data photo-id-box">34</span>
+                                        </p>
+                                        <p class="text">
+                                            Filename: <span class="data">image.jpg</span>
+                                        </p>
+                                        <p class="text">
+                                            File Type: <span class="data">JPG</span>
+                                        </p>
+                                        <p class="text">
+                                            File Size: <span class="data">3245345</span>
+                                        </p>
+                                    </div>
+                                    <div class="info-box-footer clearfix">
+                                        <div class="info-box-delete pull-left">
+                                            <a href="delete_photo.php?id=<?php echo $photo->id; ?>" class="btn btn-danger btn-lg">Delete</a>
                                         </div>
+                                        <div class="info-box-update pull-right">
+                                            <input type="submit" name="update" value="Update" class="btn btn-primary btn-lg">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
-                                    </td>
-                                    <td><?=$photo->id;?></td>
-                                    <td><?=$photo->filename;?></td>
-                                    <td><?=$photo->title;?></td>
-                                    <td><?=$photo->size;?></td>
-                                </tr>
-                            <?php endforeach;?>
-
-
-                            </tbody>
-                        </table>
-
-                    </div>
+                        </div>
+                    </form>
 
 
-
-
-                    <!--                        <ol class="breadcrumb">-->
-                    <!--                            <li>-->
-                    <!--                                <i class="fa fa-dashboard"></i>  <a href="index.html">Dashboard</a>-->
-                    <!--                            </li>-->
-                    <!--                            <li class="active">-->
-                    <!--                                <i class="fa fa-file"></i> Blank Page-->
-                    <!--                            </li>-->
-                    <!--                        </ol>-->
+                    <!--                    <ol class="breadcrumb">-->
+                    <!--                        <li>-->
+                    <!--                            <i class="fa fa-dashboard"></i>  <a href="index.html">Dashboard</a>-->
+                    <!--                        </li>-->
+                    <!--                        <li class="active">-->
+                    <!--                            <i class="fa fa-file"></i> Blank Page-->
+                    <!--                        </li>-->
+                    <!--                    </ol>-->
                 </div>
             </div>
             <!-- /.row -->
@@ -272,6 +312,12 @@ $photos = Photo::find_all();
 
 <!-- Bootstrap Core JavaScript -->
 <script src="js/bootstrap.min.js"></script>
+
+<script src="tinymce/tinymce.min.js"></script>
+
+<!--<script src="http://cdn.tinymce.com/4/tinymce.min.js"></script>-->
+
+<script src="js/scripts.js"></script>
 
 </body>
 
