@@ -242,9 +242,9 @@ if(!$session->is_signed_in()){
 
 
 
-                    //                    $users = User::find_all_users();
+                    //                    $users = User::find_all();
                     //                    foreach ($users as $user){
-                    //                        echo $user->id.'<br>';
+                    //                        echo $user->username.'<br>';
                     //                    }
 
 
@@ -290,6 +290,29 @@ if(!$session->is_signed_in()){
                     //                    $user = new User();
                     //                    $user->username = "whatever";
                     //                    $user->save();
+
+
+
+
+
+
+
+                    //PHOTO CLass
+
+                    //find photo
+                    //                    $photos = Photo::find_all();
+                    //                    foreach ($photos as $photo){
+                    //                        echo $photo->title .'<br>';
+                    //                    }
+
+                    //create Photo
+                    //                    $photos = new Photo();
+                    //                    $photos->title = "Title 2";
+                    //                    $photos->description = "Desc 2";
+                    //                    $photos->filename = "img.jpg";
+                    //                    $photos->type = "jpg";
+                    //                    $photos->size = 23;
+                    //                    $photos->create();
 
                     ?>
 
