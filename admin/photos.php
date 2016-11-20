@@ -13,7 +13,6 @@ if(!$session->is_signed_in()){
 }
 
 $photos = Photo::find_all();
-
 ?>
 
 
@@ -221,8 +220,15 @@ $photos = Photo::find_all();
 
                             <?php  foreach($photos as $photo): ?>
                                 <tr>
-                                    <td><img src="<?php echo $photo->picture_path();?>" alt=""></td>
-                                    <td><?=$photo->photo_id;?></td>
+                                    <td><img class="img-circle" src="<?php echo $photo->picture_path();?>" alt="" height="150" width="200">
+                                        <div class="pictures_link">
+                                            <a href="delete_photo.php/?id=<?php echo $photo->id; ?>" class="btn btn-success btn-xs">Delete</a>
+                                            <a href="#" class="btn btn-success btn-xs">Edit</a>
+                                            <a href="#" class="btn btn-success btn-xs">View</a>
+                                        </div>
+
+                                    </td>
+                                    <td><?=$photo->id;?></td>
                                     <td><?=$photo->filename;?></td>
                                     <td><?=$photo->title;?></td>
                                     <td><?=$photo->size;?></td>

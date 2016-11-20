@@ -314,6 +314,7 @@ if(!$session->is_signed_in()){
                     //                    $photos->size = 23;
                     //                    $photos->create();
 
+
                     ?>
 
 
