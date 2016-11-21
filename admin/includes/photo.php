@@ -53,10 +53,12 @@ class Photo extends Db_Object{
             $this->errors[] = $this->upload_errors_array[$file['error']];
             return false;
         }else{
+
             $this->filename = basename($file['name']);
             $this->tmp_path = $file['tmp_name'];
             $this->type = $file['type'];
             $this->size = $file['size'];
+            return true;
         }
 
 
@@ -77,14 +79,20 @@ class Photo extends Db_Object{
 
     public function save(){
         if ($this->id){
+
             $this->update();
+
         }else{
 
+
             if (!empty($this->errors)){
+
                 return false;
             }
             if (empty($this->filename || empty($this->tmp_path))){
+
                 $this->errors[] = "the file was not available";
+                return false;
             }
 
             $target_path = SITE_ROOT . DS . 'admin' . DS . $this->upload_directory . DS . $this->filename;
@@ -95,6 +103,7 @@ class Photo extends Db_Object{
             }
 
             if (move_uploaded_file($this->tmp_path, $target_path)){
+
                 if ($this->create()){
                     unset($this->tmp_path);
                     return true;

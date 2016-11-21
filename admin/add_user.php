@@ -1,6 +1,9 @@
 
+
 <!DOCTYPE html>
 <html lang="en">
+
+</html>
 
 <head>
 
@@ -20,7 +23,7 @@
 
     <!-- Custom Fonts -->
     <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
+    <link rel="stylesheet" href="css/styles.css">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -28,52 +31,33 @@
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+
+
 </head>
 
 <body>
 
+
 <div id="wrapper">
-
-
     <?php
-    //include('includes/database.php');
-    //include('includes/user.php');
     require_once ('includes/init.php');
-    ?>
-    <?php
     if(!$session->is_signed_in()){
-        // ../index.php =  //point cya ani : http://localhost/gallery03/index.php
         redirect("login.php");
     }
-    ?>
-
-    <?php
-
-    $message = "";
-    if (isset($_POST['submit'])){
-
-        $photo = new Photo();
-        $photo->title = $_POST['title'];
-
-        $photo->set_file($_FILES['file_upload']);
-
-
-        if ($photo->save()){
-            $mes = "Success upload!";
-            echo '<div class="alert alert-success">'.$mes.'</div>';
-//            $message = "Photo upload successfully";
-        }else{
-            join("<br>", $photo->errors);
-            foreach ($photo->errors as $error){
-                if ($error){
-                    echo '<div class="alert alert-danger">'.$error.'</div>';
-                }
-            }
+    //$user = User::find_by_id($_GET['id']);
+    $user = new User();
+    if (isset($_POST['create'])){
+        if ($user){
+            $user->username = $_POST['username'];
+            $user->first_name = $_POST['first_name'];
+            $user->last_name = $_POST['last_name'];
+            $user->password = $_POST['password'];
+            $user->set_file($_FILES['user_image']);
+            $user->upload_photo();
+            $user->save();
         }
     }
     ?>
-
-
     <!-- Navigation -->
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -185,7 +169,7 @@
                     </li>
                     <li class="divider"></li>
                     <li>
-                        <a href="#"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
+                        <a href="logout.php"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
                     </li>
                 </ul>
             </li>
@@ -215,49 +199,67 @@
 
     <div id="page-wrapper">
 
+
+
+
         <div class="container-fluid">
 
             <!-- Page Heading -->
             <div class="row">
                 <div class="col-lg-12">
                     <h1 class="page-header">
-                        Upload
+                        Users
                         <small>Subheading</small>
                     </h1>
 
+                    <form action="" method="post" enctype="multipart/form-data">
 
-                    <div class="col-md-6">
-
-                        <?php
-                        echo $message;
-                        ?>
-                        <form action="upload.php" method="post" enctype="multipart/form-data">
+                        <div class="col-md-6 col-md-offset-3">
 
                             <div class="form-group">
-                                <input type="text" name="title" class="form-control">
+                                <input type="file" name="user_image">
                             </div>
 
                             <div class="form-group">
-                                <input type="file" name="file_upload">
+                                <label for="username">Username</label>
+                                <input type="text" name="username" class="form-control">
                             </div>
 
-                            <input type="submit" name="submit">
 
-                        </form>
-                    </div>
+                            <div class="form-group">
+                                <label for="first name">First Name</label>
+                                <input type="text" name="first_name" class="form-control">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="last name">Last Name</label>
+                                <input type="text" name="last_name" class="form-control">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <input type="password" name="password" class="form-control">
+                            </div>
+
+                            <div class="form-group">
+                                <input type="submit" name="create" class="btn btn-primary pull-right">
+                            </div>
 
 
+                        </div>
 
 
+                    </form>
 
-                    <!--                        <ol class="breadcrumb">-->
-                    <!--                            <li>-->
-                    <!--                                <i class="fa fa-dashboard"></i>  <a href="index.html">Dashboard</a>-->
-                    <!--                            </li>-->
-                    <!--                            <li class="active">-->
-                    <!--                                <i class="fa fa-file"></i> Blank Page-->
-                    <!--                            </li>-->
-                    <!--                        </ol>-->
+
+                    <!--                    <ol class="breadcrumb">-->
+                    <!--                        <li>-->
+                    <!--                            <i class="fa fa-dashboard"></i>  <a href="index.html">Dashboard</a>-->
+                    <!--                        </li>-->
+                    <!--                        <li class="active">-->
+                    <!--                            <i class="fa fa-file"></i> Blank Page-->
+                    <!--                        </li>-->
+                    <!--                    </ol>-->
                 </div>
             </div>
             <!-- /.row -->
@@ -276,6 +278,12 @@
 
 <!-- Bootstrap Core JavaScript -->
 <script src="js/bootstrap.min.js"></script>
+
+<script src="tinymce/tinymce.min.js"></script>
+
+<!--<script src="http://cdn.tinymce.com/4/tinymce.min.js"></script>-->
+
+<script src="js/scripts.js"></script>
 
 </body>
 

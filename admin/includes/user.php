@@ -3,13 +3,21 @@
 class User extends Db_Object{
 
     protected static $db_table = "users";
-    protected static $db_table_fields = array('username', 'password', 'first_name', 'last_name');
+    protected static $db_table_fields = array('username', 'password', 'first_name', 'last_name', 'user_image');
     public $id;
     public $username;
     public $password;
     public $first_name;
     public $last_name;
+    public $user_image;
+    public $upload_directory = "images";
+    public $image_placeholder = "http://placehold.it/400x400&text=image";
 
+
+    public function image_path_and_placeholder(){
+//        return $this->upload_directory.DS.$this->image_placeholder;
+        return empty($this->user_image) ? $this->image_placeholder : $this->upload_directory.DS.$this->user_image;
+    }
 
     public static function verify_user($username, $password)
     {
@@ -28,8 +36,41 @@ class User extends Db_Object{
 
 
 
+    public function upload_photo(){
+//        if ($this->id){
+//
+//            $this->update();
+//        }else{
+
+        if (!empty($this->errors)){
+            return false;
+        }
+        if (empty($this->user_image || empty($this->tmp_path))){
+            $this->errors[] = "the file was not available";
+            return false;
+        }
+
+        $target_path = SITE_ROOT . DS . 'admin' . DS . $this->upload_directory . DS . $this->user_image;
+
+        if (file_exists($target_path)){
+            $this->errors[] = "The file {$this->user_image} already exists";
+            return false;
+        }
+
+        if (move_uploaded_file($this->tmp_path, $target_path)){
+
+                unset($this->tmp_path);
+                return true;
+
+        }else{
+            $this->errors[] = "the file directory does not have a permission";
+            return false;
+        }
 
 
+//        }
+
+    }
 
 
 } //end of class user

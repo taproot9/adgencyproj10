@@ -4,6 +4,59 @@ class Db_Object{
 
     protected static $db_table = "users";
 
+    public $errors = array();
+
+    public $upload_errors_array = array(
+        UPLOAD_ERR_OK => "There is no errors",
+        UPLOAD_ERR_INI_SIZE => "The uploaded file exceeds the upload_max_filesize directive in php.ini",
+        UPLOAD_ERR_FORM_SIZE => "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form",
+        UPLOAD_ERR_PARTIAL => "The uploaded file was only partially uploaded",
+        UPLOAD_ERR_NO_FILE => "No file was uploaded",
+        UPLOAD_ERR_NO_TMP_DIR => "Missing a temporary folder",
+        UPLOAD_ERR_CANT_WRITE => "Failed to write file to disk",
+        UPLOAD_ERR_EXTENSION => "A Php extension stopped the file upload"
+    );
+    public function set_file($file){
+
+//        $temp_name = $_FILES['file_upload']['tmp_name'];
+//        $the_file = $_FILES['file_upload']['name'];
+//        $directory = "uploads";
+//
+//        if (move_uploaded_file($temp_name,$directory . "/" . $the_file)){
+//            $the_message = "file uploaded successfully";
+//        }else{
+//            $the_error = $_FILES['file_upload']['error'];
+//
+//            $the_message = $upload_errors[$the_error];
+//
+//        }
+
+        if (empty('$file') || !$file || !is_array($file)){
+            $this->errors[] = "there was no file uploaded here";
+            return false;
+        }elseif ($file['error']){
+            $this->errors[] = $this->upload_errors_array[$file['error']];
+            return false;
+        }else{
+
+            $this->user_image = basename($file['name']);
+            $this->tmp_path = $file['tmp_name'];
+            $this->type = $file['type'];
+            $this->size = $file['size'];
+            return true;
+        }
+
+
+
+//        if (move_uploaded_file($this->tmp_path, $directory . SITE_ROOT . $this->user_image)){
+//            $the_message = "file uploaded successfully";
+//        }else{
+//            $the_error  = $file['error'];
+//            $the_message = $this->upload_errors_array[$the_error];
+//        }
+
+    }
+
     public static function find_all()
     {
 //        global $database;
