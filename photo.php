@@ -186,6 +186,9 @@ $comments = Comment::find_the_comments($photo->id);
 
         </div>
 
+
+
+
         <!-- Blog Sidebar Widgets Column -->
         <div class="col-md-4">
 

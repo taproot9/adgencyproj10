@@ -212,7 +212,7 @@
 
                     </h1>
 
-                    <a href="add_user.php" class="btn btn-primary">Add User</a>
+
 
                     <div class="cold-md-12">
 

@@ -13,8 +13,6 @@ if(!$session->is_signed_in()){
 <!DOCTYPE html>
 <html lang="en">
 
-</html>
-
 <head>
 
     <meta charset="utf-8">
@@ -40,6 +38,8 @@ if(!$session->is_signed_in()){
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
 </head>
 
@@ -195,7 +195,7 @@ if(!$session->is_signed_in()){
                 <div class="col-lg-12">
                     <h1 class="page-header">
                         Admin
-                        <small>Subheading</small>
+                        <small>Dashboard</small>
                     </h1>
 
                     <?php
@@ -319,14 +319,113 @@ if(!$session->is_signed_in()){
 
 
 
-                    <ol class="breadcrumb">
-                        <li>
-                            <i class="fa fa-dashboard"></i>  <a href="index.html">Dashboard</a>
-                        </li>
-                        <li class="active">
-                            <i class="fa fa-file"></i> Blank Page
-                        </li>
-                    </ol>
+                    <!--                    <ol class="breadcrumb">-->
+                    <!--                        <li>-->
+                    <!--                            <i class="fa fa-dashboard"></i>  <a href="index.html">Dashboard</a>-->
+                    <!--                        </li>-->
+                    <!--                        <li class="active">-->
+                    <!--                            <i class="fa fa-file"></i> Blank Page-->
+                    <!--                        </li>-->
+                    <!--                    </ol>-->
+
+                    <!-- /.row -->
+
+                    <div class="row">
+                        <div class="col-lg-3 col-md-6">
+                            <div class="panel panel-primary">
+                                <div class="panel-heading">
+                                    <div class="row">
+                                        <div class="col-xs-3">
+                                            <i class="fa fa-users fa-5x"></i>
+                                        </div>
+                                        <div class="col-xs-9 text-right">
+                                            <div class="huge"><?php echo $session->count; ?></div>
+                                            <div>News Views</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a href="#">
+                                    <div class="panel-footer">
+                                        <span class="pull-left">Page View from Gallery</span>
+                                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6">
+                            <div class="panel panel-green">
+                                <div class="panel-heading">
+                                    <div class="row">
+                                        <div class="col-xs-3">
+                                            <i class="fa fa-picture-o fa-5x"></i>
+                                        </div>
+                                        <div class="col-xs-9 text-right">
+                                            <div class="huge"><?php echo Photo::count_all(); ?></div>
+                                            <div>Photos</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a href="#">
+                                    <div class="panel-footer">
+                                        <span class="pull-left">Total Photos in Gallery</span>
+                                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6">
+                            <div class="panel panel-yellow">
+                                <div class="panel-heading">
+                                    <div class="row">
+                                        <div class="col-xs-3">
+                                            <i class="fa fa-user fa-5x"></i>
+                                        </div>
+                                        <div class="col-xs-9 text-right">
+                                            <div class="huge"><?php echo User::count_all(); ?></div>
+                                            <div>Users</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a href="#">
+                                    <div class="panel-footer">
+                                        <span class="pull-left">Total Users</span>
+                                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6">
+                            <div class="panel panel-red">
+                                <div class="panel-heading">
+                                    <div class="row">
+                                        <div class="col-xs-3">
+                                            <i class="fa fa-support fa-5x"></i>
+                                        </div>
+                                        <div class="col-xs-9 text-right">
+                                            <div class="huge"><?php echo Comment::count_all(); ?></div>
+                                            <div>Comments</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a href="#">
+                                    <div class="panel-footer">
+                                        <span class="pull-left">Total Comments</span>
+                                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.row -->
+
+                    <div class="row">
+                        <div id="piechart" style="width: 900px; height: 500px;"></div>
+                    </div>
+
                 </div>
             </div>
             <!-- /.row -->
@@ -345,6 +444,34 @@ if(!$session->is_signed_in()){
 
 <!-- Bootstrap Core JavaScript -->
 <script src="js/bootstrap.min.js"></script>
+
+
+<script type="text/javascript">
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+    function drawChart() {
+
+        var data = google.visualization.arrayToDataTable([
+            ['Task', 'Hours per Day'],
+            ['Views',       <?php echo $session->count; ?>],
+            ['Comments',    <?php echo Comment::count_all(); ?>],
+            ['Users',       <?php echo User::count_all(); ?>],
+            ['Photos',      <?php echo Photo::count_all(); ?>]
+        ]);
+
+        var options = {
+            legend: 'none',
+            pieSliceText: 'label',
+            title: 'My Daily Activities',
+            backgroundColor: 'transparent'
+
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+        chart.draw(data, options);
+    }
+</script>
 
 </body>
 
