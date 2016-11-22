@@ -215,6 +215,7 @@ $photos = Photo::find_all();
                                 <th>File</th>
                                 <th>Title</th>
                                 <th>Size</th>
+                                <th>Comments</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -223,10 +224,10 @@ $photos = Photo::find_all();
                             <?php  foreach($photos as $photo): ?>
                                 <tr>
                                     <td><img class="admin-photo-thumbnail" src="<?php echo $photo->picture_path();?>" alt="" height="150" width="200">
-                                        <div class="pictures_link">
+                                        <div class="action_links">
                                             <a href="delete_photo.php?id=<?php echo $photo->id; ?>" class="btn btn-success btn-xs">Delete</a>
                                             <a href="edit_photo.php?id=<?php echo $photo->id; ?>" class="btn btn-success btn-xs">Edit</a>
-                                            <a href="#" class="btn btn-success btn-xs">View</a>
+                                            <a href="../photo.php?id=<?php echo $photo->id; ?>" class="btn btn-success btn-xs">View</a>
                                         </div>
 
                                     </td>
@@ -234,6 +235,18 @@ $photos = Photo::find_all();
                                     <td><?=$photo->filename;?></td>
                                     <td><?=$photo->title;?></td>
                                     <td><?=$photo->size;?></td>
+
+
+                                    <td>
+                                        <a href="comment_photo.php?id=<?php echo $photo->id; ?>">
+                                            <?php
+                                            $comments = Comment::find_the_comments($photo->id);
+                                            echo count($comments); //count the comments or count the object
+                                            ?>
+                                        </a>
+                                    </td>
+
+
                                 </tr>
                             <?php endforeach;?>
 

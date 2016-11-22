@@ -50,11 +50,14 @@
     <?php
 
     if(!$session->is_signed_in()){
-        // ../index.php =  //point cya ani : http://localhost/gallery03/index.php
+        // ../index.php =  //point cya ani : http:/ /localhost/gallery03/index.php
         redirect("login.php");
     }
+    if (empty($_GET['id'])){
+        redirect("photos.php");
+    }
+    $comments = Comment::find_the_comments($_GET['id']);
 
-    $comments = Comment::find_all();
     ?>
 
 
@@ -229,7 +232,7 @@
                                     <td><?=$comment->id;?></td>
                                     <td><?=$comment->author;?>
                                         <div class="actions_links">
-                                            <a href="delete_comment.php?id=<?php echo $comment->id; ?>" class="btn btn-success btn-xs">Delete</a>
+                                            <a href="delete_comment_photo.php?id=<?php echo $comment->id; ?>" class="btn btn-success btn-xs">Delete</a>
                                         </div>
                                     </td>
                                     <td><?=$comment->body;?></td>
