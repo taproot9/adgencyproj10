@@ -6,6 +6,8 @@ if(!$session->is_signed_in()){
     redirect("login.php");
 }
 
+
+
 if (empty($_GET['id'])){
     redirect('photos.php');
 }else{
@@ -259,16 +261,16 @@ if (empty($_GET['id'])){
                                             <span class="glyphicon glyphicon-calendar"> </span> Uploaded on: Aug 25, 2030 @ 5:30
                                         </p>
                                         <p class="text">
-                                            Photo Id: <span class="data photo-id-box">34</span>
+                                            Photo Id: <span class="data photo-id-box"><?php echo $_GET['id']?></span>
                                         </p>
                                         <p class="text">
-                                            Filename: <span class="data">image.jpg</span>
+                                            Filename: <span class="data"><?php echo $photo->filename; ?></span>
                                         </p>
                                         <p class="text">
-                                            File Type: <span class="data">JPG</span>
+                                            File Type: <span class="data"><?php echo $photo->type; ?></span>
                                         </p>
                                         <p class="text">
-                                            File Size: <span class="data">3245345</span>
+                                            File Size: <span class="data"><?php echo $photo->size; ?></span>
                                         </p>
                                     </div>
                                     <div class="info-box-footer clearfix">
