@@ -59,8 +59,8 @@ class User extends Db_Object{
 
         if (move_uploaded_file($this->tmp_path, $target_path)){
 
-                unset($this->tmp_path);
-                return true;
+            unset($this->tmp_path);
+            return true;
 
         }else{
             $this->errors[] = "the file directory does not have a permission";
@@ -70,6 +70,33 @@ class User extends Db_Object{
 
 //        }
 
+    }
+
+    public function ajax_save_user_image($user_image, $user_id){
+
+        global $database;
+
+        $user_image = $database->escape_string($user_image);
+        $user_id = $database->escape_string($user_id);
+        $this->user_image = $user_image;
+        $this->id = $user_id;
+        $sql = "update ".self::$db_table." set user_image='{$this->user_image}'"." where id='{$this->id}'";
+        $update_image = $database->query($sql);
+
+
+        echo $this->image_path_and_placeholder();
+    }
+
+
+    public function delete_photo(){
+        if ($this->delete()){
+            $target_path = SITE_ROOT . DS . 'admin' . DS . $this->upload_directory . DS . $this->user_image;
+
+            return unlink($target_path) ? true : false ;
+
+        }else{
+            return false;
+        }
     }
 
 

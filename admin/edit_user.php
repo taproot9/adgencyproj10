@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-</html>
+
 
 <head>
 
@@ -13,7 +13,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin - Bootstrap Admin Template</title>
+    <title></title>
 
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -50,8 +50,11 @@
     if (empty($_GET['id'])){
         redirect('users.php');
     }else{
+
         $user = User::find_by_id($_GET['id']);
+
         if (isset($_POST['update'])){
+
             if ($user){
                 $user->username = $_POST['username'];
                 $user->first_name = $_POST['first_name'];
@@ -60,11 +63,16 @@
 
                 if (empty($_FILES['user_image'])){
                     $user->save();
+                    redirect('users.php');
+                    $session->message("The user has been updated");
                 }else{
                     $user->set_file($_FILES['user_image']);
                     $user->upload_photo();
                     $user->save();
-                    redirect("edit_user.php?id={$user->id}");
+
+//                    redirect("edit_user.php?id={$user->id}");
+                    redirect('users.php');
+                    $session->message("The user has been updated");
                 }
 
             }
@@ -83,6 +91,14 @@
     //        }
     //    }
     ?>
+
+
+
+
+<!--modal here-->
+<?php include "includes/photo_library_modal.php";?>
+
+
     <!-- Navigation -->
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -236,8 +252,8 @@
                         Users
                         <small>Subheading</small>
                     </h1>
-                    <div class="col-md-6">
-                        <img class="img-responsive img-circle" src="<?php echo $user->image_path_and_placeholder();?>" alt="">
+                    <div class="col-md-6 user_image_box" >
+                        <a href="#" data-toggle="modal" data-target="#photo-library"><img class="img-responsive" src="<?php echo $user->image_path_and_placeholder();?>" alt=""></a>
 
                     </div>
                     <form action="" method="post" enctype="multipart/form-data">
@@ -270,7 +286,7 @@
                             </div>
 
                             <div class="form-group">
-                                <a href="delete_user.php?id=<?php echo $user->id; ?>" class="btn btn-danger">Delete</a>
+                                <a id="user-id" href="delete_user.php?id=<?php echo $user->id; ?>" class="btn btn-danger">Delete</a>
                                 <input type="submit" name="update" class="btn btn-primary pull-right" value="Update">
                             </div>
 

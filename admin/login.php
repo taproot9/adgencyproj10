@@ -58,6 +58,8 @@ if (isset($_POST['submit'])){
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+    <link rel="stylesheet" href="css/styles.css">
+
 </head>
 
 
@@ -65,7 +67,7 @@ if (isset($_POST['submit'])){
 <div class="row">
     <div class="col-md-4 col-md-offset-4">
         <h4 class="bg-danger"><?php echo $the_message;?></h4>
-        <form action="" method="post">
+        <form id="login-id" action="" method="post">
 
             <div class="form-group">
                 <label for="username">Username</label>

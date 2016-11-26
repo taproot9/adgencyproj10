@@ -213,6 +213,9 @@
                     </h1>
 
 
+                    <p class="bg-success">
+                        <?php echo $session->message(); ?>
+                    </p>
 
                     <div class="cold-md-12">
 

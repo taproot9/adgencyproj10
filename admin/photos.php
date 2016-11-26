@@ -205,7 +205,11 @@ $photos = Photo::find_all();
                         <small></small>
                     </h1>
 
+                    <p class="bg-success">
+                        <?php echo $session->message(); ?>
+                    </p>
                     <div class="cold-md-12">
+
 
                         <table class="table table-hover">
                             <thead>
@@ -225,7 +229,7 @@ $photos = Photo::find_all();
                                 <tr>
                                     <td><img class="admin-photo-thumbnail" src="<?php echo $photo->picture_path();?>" alt="" height="150" width="200">
                                         <div class="action_links">
-                                            <a href="delete_photo.php?id=<?php echo $photo->id; ?>" class="btn btn-success btn-xs">Delete</a>
+                                            <a href="delete_photo.php?id=<?php echo $photo->id; ?>" class="btn btn-success btn-xs delete_link">Delete</a>
                                             <a href="edit_photo.php?id=<?php echo $photo->id; ?>" class="btn btn-success btn-xs">Edit</a>
                                             <a href="../photo.php?id=<?php echo $photo->id; ?>" class="btn btn-success btn-xs">View</a>
                                         </div>
@@ -286,6 +290,8 @@ $photos = Photo::find_all();
 <!-- Bootstrap Core JavaScript -->
 <script src="js/bootstrap.min.js"></script>
 
+
+<script src="js/scripts.js"></script>
 </body>
 
 </html>

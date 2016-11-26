@@ -3,8 +3,6 @@
 <!DOCTYPE html>
 <html lang="en">
 
-</html>
-
 <head>
 
     <meta charset="utf-8">
@@ -54,7 +52,9 @@
             $user->password = $_POST['password'];
             $user->set_file($_FILES['user_image']);
             $user->upload_photo();
+            $session->message("The user {$user->username} has been created");
             $user->save();
+            redirect("users.php");
         }
     }
     ?>

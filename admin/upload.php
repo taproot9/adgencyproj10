@@ -28,6 +28,8 @@
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+    <link rel="stylesheet" href="css/dropzone.css">
+
 </head>
 
 <body>
@@ -50,13 +52,36 @@
     <?php
 
     $message = "";
-    if (isset($_POST['submit'])){
 
+    //****ge change kay nag multi upload ****///////
+    //    if (isset($_POST['submit'])){
+    //
+    //        $photo = new Photo();
+    //        $photo->title = $_POST['title'];
+    //
+    //        $photo->set_file($_FILES['file']);
+    //
+    //
+    //        if ($photo->save()){
+    //            $mes = "Success upload!";
+    //            echo '<div class="alert alert-success">'.$mes.'</div>';
+    ////            $message = "Photo upload successfully";
+    //        }else{
+    //            join("<br>", $photo->errors);
+    //            foreach ($photo->errors as $error){
+    //                if ($error){
+    //                    echo '<div class="alert alert-danger">'.$error.'</div>';
+    //                }
+    //            }
+    //        }
+    //    }
+
+
+    //***kato ning mutiple file***//
+    if (isset($_FILES['file'])){
         $photo = new Photo();
         $photo->title = $_POST['title'];
-
-        $photo->set_file($_FILES['file_upload']);
-
+        $photo->set_file($_FILES['file']);
 
         if ($photo->save()){
             $mes = "Success upload!";
@@ -225,28 +250,37 @@
                         <small></small>
                     </h1>
 
+                    <div class="row">
 
-                    <div class="col-md-6">
+                        <div class="col-md-6">
 
-                        <?php
-                        echo $message;
-                        ?>
-                        <form action="upload.php" method="post" enctype="multipart/form-data">
+                            <?php
+                            echo $message;
+                            ?>
+                            <form action="upload.php" method="post" enctype="multipart/form-data">
 
-                            <div class="form-group">
-                                <input type="text" name="title" class="form-control">
-                            </div>
+                                <div class="form-group">
+                                    <input type="text" name="title" class="form-control">
+                                </div>
 
-                            <div class="form-group">
-                                <input type="file" name="file_upload">
-                            </div>
+                                <div class="form-group">
+                                    <input type="file" name="file">
+                                </div>
 
-                            <input type="submit" name="submit">
+                                <input type="submit" name="submit">
 
-                        </form>
+                            </form>
+                        </div>
+
                     </div>
 
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <form action="upload.php" class="dropzone">
 
+                            </form>
+                        </div>
+                    </div>
 
 
 
@@ -276,6 +310,9 @@
 
 <!-- Bootstrap Core JavaScript -->
 <script src="js/bootstrap.min.js"></script>
+
+
+<script src="js/dropzone.js"></script>
 
 </body>
 

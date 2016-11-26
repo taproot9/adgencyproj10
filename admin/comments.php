@@ -210,7 +210,9 @@
                     </h1>
 
 <!--                    <a href="add_user.php" class="btn btn-primary">Add User</a>-->
-
+                    <p class="bg-success">
+                        <?php echo $session->message(); ?>
+                    </p>
                     <div class="cold-md-12">
 
                         <table class="table table-hover">
